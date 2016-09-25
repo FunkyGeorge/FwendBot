@@ -17,7 +17,7 @@ bot.on("message", message => {
 	}
 	else if (message.content === "Hi")
 	{
-		message.reply(helpBlock);
+		message.reply("Hi there!");
 	}
 	else if (containsInuendo(message.content)){
 		message.reply("That's what she said!");
