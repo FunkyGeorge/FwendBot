@@ -1,5 +1,7 @@
+var express = require("express");
 var Discord = require("discord.js");
 
+var app = express();
 var bot = new Discord.Client();
 
 var helpBlock = "FwendBot V.0.1.0 \nSay hi, \nSay 'bot.obliterate' to shut me down"
@@ -77,6 +79,9 @@ var containsSubstring = function(str, message){
 
 bot.login("MjI1NzkyNTY2Njk0NTEwNTky.CruNSw.u0YDdAIHqUXBdlj7LDb5IQbiIQA");
 
+app.listen(8000, function(){
+	
+});
 
 
 
