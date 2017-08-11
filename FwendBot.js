@@ -1,30 +1,46 @@
 var express = require("express");
 var Discord = require("discord.js");
 
+var port = 8000;
 var app = express();
 var bot = new Discord.Client();
+var key = require('./keys');
 
-var helpBlock = "FwendBot V.0.1.0 \nSay hi, \nSay 'bot.obliterate' to shut me down"
+var active = true;
+
+var helpBlock = 
+`FwendBot V.0.1.1 
+Say hi,
+Say 'bot.off' to shut me down,
+Say 'bot.on' to start me back up`;
 
 bot.on("message", message => {
-	if (message.content === "help"){
-		message.reply(helpBlock)
+	if (active){
+		switch (message.content){
+			case "bot.help":
+			case "bot version":
+			case "bot -v":
+				message.reply(helpBlock);
+				break;
+			case "bot.off":
+				active = false;
+				message.reply("Shutting down...");
+				break;
+			case "Hi":
+				message.reply("Hi there!");
+				break;
+			default:
+				if (containsInuendo(message.content)){
+					message.reply("That's what she said!");
+				}
+				break;
+		}
+	} else {
+		if (message.content === "bot.on"){
+			active = true;
+			message.reply("I'm back...");
+		}
 	}
-	else if (message.content === "bot.obliterate"){
-		message.reply("Shutting down...");
-		setInterval(function(){
-			exit();
-		}, 1000);
-		
-	}
-	else if (message.content === "Hi")
-	{
-		message.reply("Hi there!");
-	}
-	else if (containsInuendo(message.content)){
-		message.reply("That's what she said!");
-	}
-
 });
 
 var containsInuendo = function(message){
@@ -77,10 +93,10 @@ var containsSubstring = function(str, message){
 
 }
 
-bot.login("MjI1NzkyNTY2Njk0NTEwNTky.CruNSw.u0YDdAIHqUXBdlj7LDb5IQbiIQA");
+bot.login(key);
 
-app.listen(8000, function(){
-	
+app.listen(port, function(){
+	console.log(`Listening on port ${port}`);
 });
 
 
