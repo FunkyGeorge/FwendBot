@@ -16,7 +16,7 @@ Say 'bot.on' to start me back up`;
 
 bot.on("message", message => {
 	if (active){
-		switch (message.content.trim()){
+		switch (message.content.toLowerCase()){
 			case "bot.help":
 			case "bot version":
 			case "bot -v":
