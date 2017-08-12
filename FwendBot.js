@@ -9,14 +9,14 @@ var key = require('./keys');
 var active = true;
 
 var helpBlock = 
-`FwendBot V.0.1.1 
-Say hi,
+`FwendBot v0.1.2 
+Say 'Hi',
 Say 'bot.off' to shut me down,
 Say 'bot.on' to start me back up`;
 
 bot.on("message", message => {
 	if (active){
-		switch (message.content){
+		switch (message.content.trim()){
 			case "bot.help":
 			case "bot version":
 			case "bot -v":
@@ -26,17 +26,19 @@ bot.on("message", message => {
 				active = false;
 				message.reply("Shutting down...");
 				break;
-			case "Hi":
+			case "hi":
+			case "hello":
+			case "what's up":
 				message.reply("Hi there!");
 				break;
 			default:
-				if (containsInuendo(message.content)){
+				if (containsInuendo(message.content) && message.content.length < 25){
 					message.reply("That's what she said!");
 				}
 				break;
 		}
 	} else {
-		if (message.content === "bot.on"){
+		if (message.content.trim() === "bot.on"){
 			active = true;
 			message.reply("I'm back...");
 		}
@@ -44,7 +46,7 @@ bot.on("message", message => {
 });
 
 var containsInuendo = function(message){
-	var nouns = ["this","that","thats","that's","it","it's"];
+	var nouns = ["this","that","thats","that's","it","it's","i'm"];
 	var verbs = ["hard","thick","big","large","long","gigantic","wet"];
 	var containsNoun = false;
 	var containsVerb = false;
